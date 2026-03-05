@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>משחק הטריוויה המשפחתי</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- מסך הגדרות -->
+  <div id="screen-setup" class="screen active">
+    <div class="container">
+      <h1 class="game-title">🎯 טריוויה משפחתית</h1>
+
+      <section class="section">
+        <h2>שחקנים</h2>
+        <div id="players-list" class="players-grid"></div>
+        <div class="add-player-row">
+          <input type="text" id="new-player-input" placeholder="שם שחקן חדש..." maxlength="20">
+          <button id="add-player-btn" class="btn-secondary">+ הוסף</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>נושאים</h2>
+        <div class="topics-grid" id="topics-grid">
+          <label class="topic-chip">
+            <input type="checkbox" value="football"> ⚽ כדורגל
+          </label>
+          <label class="topic-chip">
+            <input type="checkbox" value="music"> 🎵 מוזיקה
+          </label>
+          <label class="topic-chip">
+            <input type="checkbox" value="tv"> 📺 סדרות טלוויזיה
+          </label>
+          <label class="topic-chip">
+            <input type="checkbox" value="musicals"> 🎭 מחזות זמר
+          </label>
+          <label class="topic-chip">
+            <input type="checkbox" value="world_history"> 🌍 היסטוריה עולמית
+          </label>
+          <label class="topic-chip">
+            <input type="checkbox" value="israel_history"> 🇮🇱 היסטוריה ישראל
+          </label>
+        </div>
+      </section>
+
+      <button id="start-btn" class="btn-primary btn-large" disabled>
+        התחל משחק (15 שאלות)
+      </button>
+    </div>
+  </div>
+
+  <!-- מסך טעינה -->
+  <div id="screen-loading" class="screen">
+    <div class="container center">
+      <div class="spinner"></div>
+      <p class="loading-text">מייצר שאלות...</p>
+      <p class="loading-sub">זה לוקח כמה שניות</p>
+    </div>
+  </div>
+
+  <!-- מסך שאלה -->
+  <div id="screen-question" class="screen">
+    <div class="container">
+      <div class="question-header">
+        <span id="question-progress" class="progress-text">שאלה 1 מתוך 15</span>
+        <span id="question-topic" class="topic-badge"></span>
+      </div>
+
+      <div class="timer-bar-wrap">
+        <div id="timer-bar" class="timer-bar"></div>
+      </div>
+      <div id="timer-display" class="timer-display">10</div>
+
+      <div id="question-text" class="question-text"></div>
+
+      <div id="options-container" class="options-container"></div>
+
+      <button id="reveal-btn" class="btn-secondary">הצג תשובה</button>
+
+      <div id="answer-reveal" class="answer-reveal hidden">
+        <span class="answer-label">תשובה נכונה:</span>
+        <span id="correct-answer-text" class="answer-text"></span>
+      </div>
+
+      <div class="award-section">
+        <p class="award-label">מי ענה נכון?</p>
+        <div id="award-buttons" class="award-buttons"></div>
+        <button id="nobody-btn" class="btn-nobody">אף אחד לא ענה</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- מסך סיום -->
+  <div id="screen-end" class="screen">
+    <div class="container center">
+      <h1 class="end-title">🏆 המשחק הסתיים!</h1>
+      <div id="final-scores" class="final-scores"></div>
+      <button id="new-game-btn" class="btn-primary btn-large">משחק חדש</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

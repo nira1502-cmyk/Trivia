@@ -1,0 +1,492 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --primary: #6c3fc5;
+  --primary-dark: #4f2d8e;
+  --accent: #f0a500;
+  --danger: #e03e3e;
+  --success: #2ecc71;
+  --bg: #f5f3ff;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --muted: #777;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(108, 63, 197, 0.12);
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  direction: rtl;
+}
+
+/* ── Screens ── */
+.screen {
+  display: none;
+  min-height: 100dvh;
+}
+.screen.active {
+  display: block;
+}
+
+.container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.container.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  gap: 20px;
+}
+
+/* ── Typography ── */
+h1.game-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+}
+
+/* ── Sections ── */
+.section {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Players ── */
+.players-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.player-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.player-chip.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.player-chip .remove-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.6;
+}
+.player-chip .remove-btn:hover {
+  opacity: 1;
+}
+
+.add-player-row {
+  display: flex;
+  gap: 8px;
+}
+
+.add-player-row input {
+  flex: 1;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s;
+  direction: rtl;
+}
+
+.add-player-row input:focus {
+  border-color: var(--primary);
+}
+
+/* ── Topics ── */
+.topics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.topic-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 2px solid #ddd;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.topic-chip:has(input:checked) {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.topic-chip input {
+  display: none;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  width: 100%;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-primary:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover {
+  background: var(--bg);
+}
+
+.btn-large {
+  font-size: 1.1rem;
+  padding: 16px 32px;
+}
+
+/* ── Loading ── */
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 5px solid #e0d9ff;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.loading-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ── Question Screen ── */
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.topic-badge {
+  background: var(--primary);
+  color: white;
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.timer-bar-wrap {
+  height: 8px;
+  background: #e0d9ff;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.timer-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+  transition: width 1s linear, background 0.3s;
+  width: 100%;
+}
+
+.timer-bar.warning {
+  background: var(--accent);
+}
+
+.timer-bar.danger {
+  background: var(--danger);
+}
+
+.timer-display {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.timer-display.warning {
+  color: var(--accent);
+}
+
+.timer-display.danger {
+  color: var(--danger);
+}
+
+.question-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  min-height: 90px;
+}
+
+/* ── Options ── */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.option-btn {
+  background: var(--card);
+  border: 2px solid #ddd;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 1rem;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+
+.option-btn:hover {
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.option-btn.correct {
+  background: #d4f8e8;
+  border-color: var(--success);
+  color: #1a6b3c;
+}
+
+.option-btn.wrong {
+  background: #fde8e8;
+  border-color: var(--danger);
+  color: #8b2020;
+}
+
+/* ── Answer Reveal ── */
+.answer-reveal {
+  background: #d4f8e8;
+  border: 2px solid var(--success);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.answer-reveal.hidden {
+  display: none;
+}
+
+.answer-label {
+  font-weight: 700;
+  color: #1a6b3c;
+  white-space: nowrap;
+}
+
+.answer-text {
+  font-weight: 600;
+  color: #1a6b3c;
+}
+
+/* ── Award Section ── */
+.award-section {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-top: 8px;
+}
+
+.award-label {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--primary-dark);
+}
+
+.award-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.award-btn {
+  flex: 1;
+  min-width: 80px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.award-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.03);
+}
+
+.award-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-nobody {
+  width: 100%;
+  background: white;
+  color: var(--muted);
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  padding: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-nobody:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ── End Screen ── */
+.end-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.final-scores {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.score-row.winner {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 1.2rem;
+}
+
+.score-row .rank {
+  font-size: 1.4rem;
+  margin-left: 10px;
+}
+
+.score-points {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* ── Utility ── */
+.hidden {
+  display: none !important;
+}
