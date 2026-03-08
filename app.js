@@ -28,6 +28,7 @@ const screens = {
   loading:  document.getElementById('screen-loading'),
   question: document.getElementById('screen-question'),
   end:      document.getElementById('screen-end'),
+  answers:  document.getElementById('screen-answers'),
 };
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -150,6 +151,14 @@ function showQuestion() {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
       btn.textContent = opt;
+      btn.addEventListener('click', () => {
+        if (state.answerRevealed) return;
+        revealAnswer();
+        document.querySelectorAll('.option-btn').forEach(b => {
+          if (b.textContent === q.answer) b.classList.add('correct');
+          else if (b === btn) b.classList.add('wrong');
+        });
+      });
       optContainer.appendChild(btn);
     });
   }
@@ -176,9 +185,11 @@ function showQuestion() {
   startTimer();
 }
 
+const TIMER_SECONDS = 20;
+
 function startTimer() {
-  state.timeLeft = 10;
-  updateTimerUI(10);
+  state.timeLeft = TIMER_SECONDS;
+  updateTimerUI(TIMER_SECONDS);
 
   clearInterval(state.timerInterval);
   state.timerInterval = setInterval(() => {
@@ -194,7 +205,7 @@ function startTimer() {
 function updateTimerUI(t) {
   const bar = $('timer-bar');
   const display = $('timer-display');
-  const pct = (t / 10) * 100;
+  const pct = (t / TIMER_SECONDS) * 100;
 
   bar.style.width = pct + '%';
   display.textContent = t;
@@ -275,8 +286,33 @@ function showEndScreen() {
   });
 }
 
+// ── Answers Review Screen ──────────────────────────────────────────────────────
+function showAnswersScreen() {
+  showScreen('answers');
+  const container = $('answers-list');
+  container.innerHTML = '';
+
+  state.questions.forEach((q, i) => {
+    const item = document.createElement('div');
+    item.className = 'answer-review-item';
+    item.innerHTML = `
+      <div class="answer-review-num">${i + 1}</div>
+      <div class="answer-review-body">
+        <div class="answer-review-q">${q.question}</div>
+        <div class="answer-review-a">✓ ${q.answer}</div>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+$('show-answers-btn').addEventListener('click', showAnswersScreen);
+
 // New game
 $('new-game-btn').addEventListener('click', () => {
+  showScreen('setup');
+});
+$('new-game-from-answers-btn').addEventListener('click', () => {
   showScreen('setup');
 });
 

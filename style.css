@@ -486,6 +486,56 @@ h2 {
   font-weight: 800;
 }
 
+/* ── Answers Review ── */
+.answers-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.answers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.answer-review-item {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  align-items: flex-start;
+}
+
+.answer-review-num {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary);
+  min-width: 24px;
+}
+
+.answer-review-body {
+  flex: 1;
+}
+
+.answer-review-q {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.answer-review-a {
+  font-size: 0.9rem;
+  color: #1a6b3c;
+  font-weight: 700;
+}
+
 /* ── Utility ── */
 .hidden {
   display: none !important;
