@@ -103,39 +103,29 @@ function addPlayer() {
 $('start-btn').addEventListener('click', startGame);
 
 // ── Game Start ───────────────────────────────────────────────────────────────
-async function startGame() {
-  // Init scores
+function startGame() {
   state.scores = {};
   state.selectedPlayers.forEach(p => state.scores[p] = 0);
   state.currentIndex = 0;
-  state.questions = [];
 
-  showScreen('loading');
-
-  try {
-    const response = await fetch('/api/questions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        topics: state.selectedTopics,
-        count: 15,
-      }),
-    });
-
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error || `שגיאת שרת ${response.status}`);
+  // Collect questions from selected topics
+  let pool = [];
+  state.selectedTopics.forEach(topic => {
+    if (QUESTIONS_BANK[topic]) {
+      pool = pool.concat(QUESTIONS_BANK[topic]);
     }
-    const data = await response.json();
+  });
 
-    if (!Array.isArray(data) || data.length === 0) throw new Error('לא התקבלו שאלות');
-    state.questions = data;
-
-    showQuestion();
-  } catch (err) {
-    alert('שגיאה בטעינת שאלות: ' + err.message + '\nבדוק שהשרת רץ ושמפתח ה-API תקין.');
-    showScreen('setup');
+  if (pool.length === 0) {
+    alert('לא נמצאו שאלות לנושאים שנבחרו');
+    return;
   }
+
+  // Shuffle and pick 15
+  pool.sort(() => Math.random() - 0.5);
+  state.questions = pool.slice(0, 15);
+
+  showQuestion();
 }
 
 // ── Question Screen ───────────────────────────────────────────────────────────
