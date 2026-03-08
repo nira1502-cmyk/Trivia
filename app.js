@@ -122,7 +122,10 @@ async function startGame() {
       }),
     });
 
-    if (!response.ok) throw new Error('שגיאה בשרת');
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || `שגיאת שרת ${response.status}`);
+    }
     const data = await response.json();
 
     if (!Array.isArray(data) || data.length === 0) throw new Error('לא התקבלו שאלות');
